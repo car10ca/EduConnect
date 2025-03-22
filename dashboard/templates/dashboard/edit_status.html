@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Edit Status Update</h1> <!-- Main heading indicating the page purpose -->
+
+<!-- Form to edit the status update -->
+<form method="post">
+    {% csrf_token %} <!-- CSRF token for security to prevent cross-site request forgery -->
+    {{ form.as_p }} <!-- Render the form fields as paragraphs for easy styling -->
+    <button type="submit">Save Changes</button> <!-- Submit button to save changes to the status -->
+</form>
+
+<!-- Link to navigate back to the user's profile -->
+<a href="{% url 'accounts:user_profile_with_id' request.user.id %}">Back to Profile</a>
+
+{% endblock %}

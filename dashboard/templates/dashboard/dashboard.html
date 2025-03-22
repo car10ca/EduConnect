@@ -1,0 +1,69 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ user.username }}!</h1> <!-- Display the logged-in user's username -->
+
+<!-- Notifications Section -->
+<h2>Notifications</h2>
+{% if unread_notifications %}
+<p>You have new notifications. <a href="{% url 'notifications:notifications_list' %}">View Notifications</a></p>
+{% else %}
+<p>No new notifications. <a href="{% url 'notifications:notifications_list' %}">View All Notifications</a></p>
+{% endif %}
+
+<!-- Display for Teachers -->
+{% if user.is_teacher %}
+<h2>Your Courses</h2>
+
+{% if course_feedback %}
+<ul>
+    <!-- List all courses created by the teacher -->
+    {% for entry in course_feedback %}
+    <li>
+        <a href="{% url 'courses:course_detail' entry.course.id %}">{{ entry.course.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<!-- Message if no courses are created -->
+<p>You haven't created any courses yet. <a href="{% url 'courses:course_create' %}">Create a New Course</a></p>
+{% endif %}
+
+<!-- Link to view all courses created by the teacher -->
+<p><a href="{% url 'courses:course_list' %}">View All Courses</a></p>
+
+<h2>Feedback</h2>
+{% if course_feedback %}
+<!-- Message if there is feedback on the courses -->
+<p>You have feedback on your courses. <a href="{% url 'feedback:feedback_list' %}">View Feedback</a></p>
+{% else %}
+<!-- Message if there is no feedback available -->
+<p>No feedback available yet. <a href="{% url 'feedback:feedback_list' %}">View Feedback</a></p>
+{% endif %}
+
+<!-- Display for Students -->
+{% else %}
+<h2>Enrolled Courses</h2>
+
+{% if enrolled_courses %}
+<ul>
+    <!-- List all courses in which the student is enrolled -->
+    {% for enrollment in enrolled_courses %}
+    <li>
+        <a href="{% url 'courses:course_detail' enrollment.course.id %}">{{ enrollment.course.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<!-- Message if the student is not enrolled in any courses -->
+<p>You are not enrolled in any courses yet. <a href="{% url 'courses:course_list' %}">Browse Courses</a></p>
+{% endif %}
+{% endif %}
+
+<!-- Chat Section -->
+<h2>Chat</h2>
+<p><a href="{% url 'chat:chat_home' %}">Chat with other users</a></p>
+
+{% endblock %}
