@@ -1,0 +1,35 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Notifications{% endblock %} <!-- Dynamic title block for the page -->
+
+{% block content %}
+<h1>Notifications</h1> <!-- Main heading of the page -->
+
+<div>
+    {% if notifications %}
+    <!-- Loop through each notification and display it -->
+    {% for notification in notifications %}
+    <p class="notification-item {% if not notification.is_read %}notification-unread{% endif %}">
+        <!-- Display a dot indicator for unread notifications -->
+        {% if not notification.is_read %}
+        <span class="notification-dot">●</span>
+        {% endif %}
+        <!-- Show the notification message and the formatted creation date -->
+        {{ notification.message }} - {{ notification.created_at|date:"M. d, Y, P" }}
+        <br>
+        <!-- Links to mark as read/unread and to delete the notification -->
+        {% if notification.is_read %}
+        <a href="{% url 'notifications:mark_as_unread' notification.id %}">Mark as unread</a> |
+        {% else %}
+        <a href="{% url 'notifications:mark_as_read' notification.id %}">Mark as read</a> |
+        {% endif %}
+        <a href="{% url 'notifications:delete_notification' notification.id %}">Delete</a>
+    </p>
+    {% endfor %}
+    {% else %}
+    <!-- Message displayed if there are no notifications -->
+    <p>No notifications to show.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
