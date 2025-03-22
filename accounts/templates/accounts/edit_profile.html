@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}  <!-- Inherit from a base template named base_generic.html -->
+
+{% block title %}Edit Profile{% endblock %}  <!-- Set the title of the page -->
+
+{% block content %}
+<h1>Edit Profile</h1> 
+
+<!-- Profile editing form -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}  <!-- Django's CSRF token for security, prevents cross-site request forgery attacks -->
+    {{ form.as_p }}  <!-- Render the form fields as paragraphs for easy styling -->
+    <button type="submit">Save Changes</button>  <!-- Submit button to save profile changes -->
+</form>
+
+<hr>  
+
+<!-- Separate section for changing the password -->
+<h2>Change Password</h2>
+<p>If you would like to change your password, click the link below:</p>
+<p><a href="{% url 'accounts:password_change' %}">Change Password</a></p>  <!-- Link to change password view -->
+
+<hr>
+
+<!-- Go back to user profile -->
+<a href="{% url 'accounts:user_profile' %}">Cancel</a>
+{% endblock %}

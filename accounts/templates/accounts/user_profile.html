@@ -1,0 +1,57 @@
+{% extends "base_generic.html" %}  <!-- Inherit from a base template named base_generic.html -->
+
+{% block content %}
+<h1>{{ viewed_user.username }}'s Profile</h1>  <!-- Display the username as the page heading -->
+
+<!-- Display the latest status update -->
+{% if status_updates %}
+    <p><strong>Status:</strong> {{ status_updates.0.content }}</p>  <!-- Show the latest status content -->
+    <p><small>{{ status_updates.0.timestamp|date:"M d, Y H:i" }}</small></p>  <!-- Show the timestamp of the latest status update -->
+{% else %}
+    <p><strong>Status:</strong> No status update available.</p>  <!-- Message if there are no status updates -->
+{% endif %}
+
+<!-- Display profile photo if it exists -->
+{% if viewed_user.profile_photo %}
+    <div class="profile-photo-container">
+        <img src="{{ viewed_user.profile_photo.url }}" alt="Profile photo" class="profile-photo">  <!-- Show the user's profile photo -->
+    </div>
+{% endif %}
+
+<!-- Display username and email -->
+<p>Username: {{ viewed_user.username }}</p>  <!-- Display the username -->
+<p>Email: {{ viewed_user.email }}</p>  <!-- Display the email address -->
+
+<!-- Show the Edit Profile link if the user is viewing their own profile -->
+{% if viewed_user == request.user %}
+    <a href="{% url 'accounts:edit_profile' %}">Edit Profile</a>  <!-- Link to edit profile -->
+{% endif %}
+
+<!-- New Status Update Section: Only visible to the profile owner -->
+{% if viewed_user == request.user %}
+    <h2>New Status Update</h2>  <!-- Heading for the new status update form -->
+    <form method="post">  <!-- Form to post a new status update -->
+        {% csrf_token %}  <!-- CSRF token for security -->
+        <label for="{{ form.content.id_for_label }}">Status:</label>  <!-- Label for the status content input -->
+        {{ form.content }}  <!-- Input field for the status update content -->
+        <p><small>Write your status update (max 250 characters).</small></p>  <!-- Help text for the status update -->
+        <button type="submit">Post Update</button>  <!-- Button to submit the status update form -->
+    </form>
+{% endif %}
+
+<!-- Recent Status Updates Section -->
+<h2>Recent Status Updates</h2>  <!-- Heading for the list of recent status updates -->
+<p><small>(last 5 shown)</small></p>  <!-- Note indicating that only the last 5 updates are shown -->
+{% if status_updates %}
+    <ul>
+        {% for update in status_updates %}  <!-- Loop through each status update -->
+            <li>
+                <strong>{{ update.timestamp|date:"M d, Y H:i" }}</strong>: {{ update.content }}  <!-- Show the timestamp and content of each update -->
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No recent status updates available.</p>  <!-- Message if there are no recent updates to display -->
+{% endif %}
+
+{% endblock %}

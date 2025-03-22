@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}  <!-- Inherit from a base template named base_generic.html -->
+
+{% block content %}
+<h2>Login</h2> 
+
+<!-- Login form -->
+<form method="post">  <!-- Use the POST method to submit the form data securely -->
+    {% csrf_token %}  <!-- CSRF token for security to prevent cross-site request forgery attacks -->
+    {{ form.as_p }}  <!-- Render the login form fields as paragraphs for simple styling -->
+    <button type="submit">Login</button>  <!-- Submit button for the login form -->
+</form>
+{% endblock %}

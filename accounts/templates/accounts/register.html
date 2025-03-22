@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}  <!-- Inherit from a base template named base_generic.html -->
+
+{% block content %}
+  <h2>Register</h2>  
+
+  <form method="post" enctype="multipart/form-data">  <!-- Use POST method and support file uploads -->
+    {% csrf_token %}  <!-- CSRF token for security to prevent cross-site request forgery attacks -->
+    {{ form.as_p }}  <!-- Render the registration form fields as paragraphs for simple styling -->
+    <button type="submit">Register</button>  
+  </form>
+{% endblock %}
