@@ -1,0 +1,242 @@
+/* General site-wide styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    /* Use custom font */
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    /* Light gray background */
+}
+
+main {
+    margin: 100px 20px 40px 20px;
+    /* Added space at the top for the navbar, bottom space for the footer */
+}
+
+/* ==== BEGIN: base_generic.html ==== */
+/* Navbar styles */
+.navbar {
+    background-color: #333;
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.logo {
+    font-size: 1.5rem;
+    color: white;
+}
+
+/* Updated user info styles */
+.user-info {
+    display: flex;
+    align-items: center;
+    color: teal;
+    /* Changed the text color to teal */
+    margin-right: 20px;
+    /* Added margin to ensure the section doesn't go too far right */
+}
+
+.user-info ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.user-info ul li {
+    display: inline;
+    margin-left: 10px;
+}
+
+.user-info ul li a {
+    color: #20c997;
+    /* Nice teal color for the links */
+    text-decoration: none;
+}
+
+.user-info ul li a:hover {
+    text-decoration: underline;
+    color: #1ea78a;
+    /* Darker teal on hover */
+}
+
+.logout-form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.button-logout {
+    background-color: #20c997;
+    /* Complementary teal color for the logout button */
+    border: 1px solid #1ea78a;
+    /* Slightly darker border */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.button-logout:hover {
+    background-color: #1ea78a;
+    /* Darker teal on hover */
+    border-color: #179f77;
+}
+
+/* General styling for error messages across all templates */
+.error-message {
+    background-color: #ffcccc;
+    color: #900;
+    padding: 0.75rem;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+/* ==== END: base_generic.html ==== */
+
+/* Footer styles */
+footer {
+    padding: 20px;
+    /* Add padding to ensure the footer content isn't flush against the edges */
+    background-color: #333;
+    color: white;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* ==== BEGIN: accounts app ==== */
+/* Profile photo styles */
+.profile-photo-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-photo {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* ==== END: accounts app ==== */
+
+/* ==== BEGIN: notifications app ==== */
+/* Notifications list styles */
+.notification-item {
+    margin-bottom: 10px;
+}
+
+.notification-unread {
+    font-weight: bold;
+}
+
+.notification-dot {
+    color: red;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* ==== END: notifications app ==== */
+
+/* ==== BEGIN: chat app ==== */
+/* Delete room button */
+.delete-room-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Chat log styles */
+.chat-log {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 80%;
+    height: 300px;
+    overflow-y: auto;
+}
+
+/* ==== END: chat app ==== */
+
+/* ==== Messages Styles ==== */
+
+/* General container for messages */
+.messages-container {
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+/* General alert styling */
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Success message styling */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Error message styling */
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Info message styling */
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Warning message styling */
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
