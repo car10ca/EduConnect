@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EduConnect{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="navbar-container">
+            <h1 class="logo">EduConnect</h1>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'chat:chat_home' %}">Chat</a></li>
+                    <li><a href="{% url 'courses:course_list' %}">Courses</a></li>
+                    <li><a href="{% url 'notifications:notifications_list' %}">Notifications</a></li>
+                    <li><a href="{% url 'feedback:feedback_list' %}">Feedback</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-info">
+                <ul>
+                    {% if user.is_authenticated %}
+                    <li>Welcome, {{ request.user.username }}!</li>
+                    <li><a href="{% url 'accounts:user_profile' %}">Profile</a></li>
+                    <li>
+                        <form action="{% url 'accounts:logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="button-logout">Logout</button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                    <li><a href="{% url 'accounts:register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Display Django messages -->
+    <div class="messages-container">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 EduConnect. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

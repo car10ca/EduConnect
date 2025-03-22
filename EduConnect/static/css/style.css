@@ -1,0 +1,215 @@
+/* General site-wide styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    margin-top: 60px;
+    /* Space for fixed navbar */
+}
+
+main {
+    margin: 20px 20px 40px 20px;
+    /* Ensure consistent top margin across all roles */
+    max-width: 1000px;
+    /* Limit the main content width */
+    margin-left: auto;
+    margin-right: auto;
+    /* Center the main content */
+}
+
+/* ==== Navbar styles ==== */
+.navbar {
+    background-color: #333;
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    /* Ensure navbar stays on top */
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    /* Create space between links */
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+    /* Underline links on hover */
+}
+
+.logo {
+    font-size: 1.5rem;
+    color: white;
+}
+
+/* ==== Updated user info styles ==== */
+.user-info {
+    display: flex;
+    align-items: center;
+    color: white;
+    /* Set text color to white */
+    margin-right: 30px;
+    /* Add more margin to the right */
+    padding-left: 10px;
+    /* Slightly move the user info section to the left */
+}
+
+.user-info ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.user-info ul li {
+    display: inline;
+    margin-left: 10px;
+}
+
+/* Username styling */
+.user-info ul li:first-child {
+    font-weight: bold;
+    /* Bold username */
+    margin-right: 10px;
+    /* Add space between username and profile link */
+}
+
+/* Profile link styling */
+.user-info ul li a {
+    color: white;
+    /* Profile link to white */
+    text-decoration: none;
+}
+
+.user-info ul li a:hover {
+    text-decoration: underline;
+    /* Underline on hover */
+}
+
+/* Logout button */
+.logout-form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.button-logout {
+    background-color: #007bff;
+    /* Set logout button color to blue */
+    border: 1px solid #0056b3;
+    /* Darker blue border */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.button-logout:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+    border-color: #004080;
+}
+
+/* ==== Messages Styles ==== */
+.messages-container {
+    margin: 20px auto;
+    max-width: 800px;
+    padding-top: 100px;
+    /* Space from the navbar */
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Success message styling */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Footer styles */
+footer {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Profile photo styles */
+.profile-photo-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-photo {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    /* Ensure the profile photo fits neatly in the container */
+}
+
+/* Chat log styles */
+.chat-log {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 80%;
+    height: 300px;
+    overflow-y: auto;
+    /* Scrollable chat log */
+}
+
+/* ==== Notifications Styles ==== */
+
+/* Style for individual notification items */
+.notification-item {
+    margin-bottom: 10px;
+}
+
+/* Style for unread notifications (bold text) */
+.notification-unread {
+    font-weight: bold;
+}
+
+/* Red dot for unread notifications */
+.notification-dot {
+    color: red;
+    font-weight: bold;
+    margin-right: 5px;
+    /* Red dot to indicate unread notifications */
+}
