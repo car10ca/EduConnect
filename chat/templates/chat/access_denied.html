@@ -1,0 +1,7 @@
+{% extends 'base_generic.html' %} <!-- Inherit from a base template named base_generic.html -->
+
+{% block content %}
+<h2>Access Denied</h2> <!-- Display an access denied message -->
+<p>{{ message }}</p> <!-- Show a custom message passed from the view -->
+<p><a href="{% url 'chat:chat_home' %}">Back to Chat Home</a></p>
+{% endblock %}

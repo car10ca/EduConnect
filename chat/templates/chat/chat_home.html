@@ -1,0 +1,86 @@
+{% extends 'base_generic.html' %}
+
+{% load chat_filters %} <!-- Load the custom filters -->
+
+{% block content %}
+<h2>Welcome to the Chat Home</h2>
+
+{% if user.is_authenticated %}
+<!-- Message for authenticated users -->
+<p>Join one of the generic rooms below or create a new one!</p>
+
+<!-- Predefined chat rooms -->
+<h3>Available Chat Rooms</h3>
+<ul>
+    <!-- Links to predefined chat rooms -->
+    <li>
+        <a href="{% url 'chat:room' room_name='teacher_student' %}">
+            Teacher-Student Room (Accessible to all teachers and students)
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'chat:room' room_name='students' %}">
+            Students Only Room
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'chat:room' room_name='teachers' %}">
+            Teachers Only Room
+        </a>
+    </li>
+
+    <!-- Dynamically created chat rooms -->
+    {% for chat in chat_sessions %}
+    {% if chat.name|notin_list:"teacher_student,students,teachers,general" %}
+    <li>
+        <a href="{% url 'chat:room' room_name=chat.name %}">{{ chat.name }}</a>
+        {% if chat.is_private %} (Private Room) {% endif %}
+    </li>
+    {% endif %}
+    {% empty %}
+    <!-- Display if no additional rooms are available -->
+    <li>No additional rooms available yet. Create one below!</li>
+    {% endfor %}
+</ul>
+
+<!-- Form to create a new chat room -->
+<h3>Create a New Room</h3>
+<form method="post">
+    {% csrf_token %} <!-- CSRF token for security -->
+    {{ form.as_p }} <!-- Render the form fields as paragraphs for easy styling -->
+    <button type="submit">Create Room</button>
+</form>
+
+<!-- Script to make the user list searchable -->
+<script>
+    // Make the select input searchable
+    const selectInput = document.querySelector('select');
+    if (selectInput) {
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = 'Search users...';
+        selectInput.parentNode.insertBefore(searchInput, selectInput);
+
+        // Filter the options based on user input
+        searchInput.addEventListener('input', function () {
+            const filter = searchInput.value.toLowerCase();
+            const options = selectInput.options;
+            for (let i = 0; i < options.length; i++) {
+                const optionText = options[i].text.toLowerCase();
+                if (optionText.includes(filter)) {
+                    options[i].style.display = '';
+                } else {
+                    options[i].style.display = 'none';
+                }
+            }
+        });
+    }
+</script>
+
+{% else %}
+<!-- Message for users who are not logged in -->
+<p>You must be logged in to join the chat rooms.</p>
+<a href="{% url 'accounts:login' %}">Login here</a> <!-- Link to the login page -->
+{% endif %}
+
+{% endblock %}
