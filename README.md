@@ -2,7 +2,6 @@
 
 EduConnect is a modern e-learning platform built with Django. It enables seamless interaction between **students** and **teachers**, offering features like course enrollment, real-time chat, notifications, and structured learning flows.
 
----
 
 ## ✨ Features
 
@@ -15,7 +14,6 @@ EduConnect is a modern e-learning platform built with Django. It enables seamles
 - **Asynchronous Tasks**: Handled via Celery & Redis for notifications and background processing  
 - **Testing Suite**: Includes unit tests for views, models, and APIs  
 
----
 
 ## 🧰 Tech Stack
 
@@ -25,7 +23,6 @@ EduConnect is a modern e-learning platform built with Django. It enables seamles
 - **API**: Django REST Framework (DRF)  
 - **Chat & Notifications**: Channels + WebSockets  
 
----
 
 ## ⚙️ Installation
 
@@ -89,8 +86,10 @@ redis-server
 ## ✅ Running Tests
 pytest
 
+
 ## 📄 License
 This project is open source under the MIT License.
+
 
 ## 🚀 Future Improvements
 - Video streaming integration
