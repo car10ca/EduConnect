@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Block Student</h1> <!-- Heading indicating the action to block a student -->
+
+<!-- Confirmation message -->
+<p>Are you sure you want to block {{ student.username }} from the course {{ course.title }}?</p>
+
+<!-- Form to confirm blocking the student -->
+<form method="post">
+    {% csrf_token %} <!-- CSRF token for security to prevent cross-site request forgery -->
+    <button type="submit" class="btn btn-warning">Block Student</button> <!-- Submit button to confirm blocking -->
+    <a href="{% url 'courses:course_detail' course.id %}" class="btn btn-secondary">Cancel</a>
+    <!-- Link to cancel the action and go back to course details -->
+</form>
+
+{% endblock %}

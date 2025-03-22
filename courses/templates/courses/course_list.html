@@ -1,0 +1,83 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Courses{% endblock %} <!-- Set the title of the page -->
+
+{% block content %}
+<h1>Courses</h1> <!-- Main heading of the page -->
+
+{% if user.is_teacher %}
+<!-- Section for Teachers: Display Created Courses and Option to Create New Ones -->
+<h2>Your Created Courses</h2>
+<ul>
+    {% for course in courses %}
+    <li>
+        <a href="{% url 'courses:course_detail' course.id %}">{{ course.title }}</a> <!-- Link to course details -->
+    </li>
+    {% empty %}
+    <p>You haven't created any courses yet.</p> <!-- Message if no courses are created by the teacher -->
+    {% endfor %}
+</ul>
+
+<!-- Pagination controls for teachers -->
+<div class="pagination">
+    <span class="step-links">
+        {% if courses.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ courses.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ courses.number }} of {{ courses.paginator.num_pages }}.
+        </span>
+
+        {% if courses.has_next %}
+        <a href="?page={{ courses.next_page_number }}">next</a>
+        <a href="?page={{ courses.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<p><a href="{% url 'courses:course_create' %}">+ Create New Course</a></p> <!-- Link to create a new course -->
+
+{% else %}
+<!-- Section for Students: Display Available, Enrolled, and Unavailable Courses -->
+
+<!-- Available Courses -->
+<h2>Available Courses</h2>
+<ul>
+    {% for course in available_courses %}
+    <li>
+        <strong>{{ course.title }}</strong>
+        <!-- Enroll link for available courses -->
+        <a href="{% url 'courses:enroll_in_course' course.id %}" style="color: teal;">Enroll</a>
+    </li>
+    {% empty %}
+    <p>No courses available for enrollment.</p> <!-- Message if no courses are available for enrollment -->
+    {% endfor %}
+</ul>
+
+<!-- Enrolled Courses -->
+<h2>Enrolled Courses</h2>
+<ul>
+    {% for enrollment in enrolled_courses %}
+    <li>
+        <a href="{% url 'courses:course_detail' enrollment.course.id %}">{{ enrollment.course.title }}</a>
+        <!-- Link to course details for enrolled courses -->
+    </li>
+    {% empty %}
+    <p>You are not enrolled in any courses yet.</p> <!-- Message if the student is not enrolled in any courses -->
+    {% endfor %}
+</ul>
+
+<!-- Unavailable Courses -->
+<h2>Unavailable Courses</h2>
+<ul>
+    {% for course in unavailable_courses %}
+    <li>{{ course.title }} (You are either blocked or unenrolled)</li>
+    <!-- List courses that are unavailable due to being blocked or unenrolled -->
+    {% empty %}
+    <p>No unavailable courses.</p> <!-- Message if no courses are unavailable -->
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

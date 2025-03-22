@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %} <!-- Inherit from the base template to maintain consistent styling -->
+
+{% block content %}
+<h2>Add New Files to {{ course.title }}</h2>
+
+<!-- Form for uploading files -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %} <!-- CSRF token for security to prevent cross-site request forgery -->
+    {{ form.non_field_errors }} <!-- Display non-field errors if any -->
+    {{ form.file.errors }} <!-- Display file-specific errors if any -->
+
+    <!-- File input field -->
+    <div>
+        {{ form.file.label_tag }} {{ form.file }}<br> <!-- File input label and field -->
+        <small>Accepted file types: pdf, txt, doc, docx, png, jpg, jpeg</small> <!-- Note on accepted file types -->
+    </div>
+    <br><br>
+
+    <!-- Submit and Cancel buttons -->
+    <button type="submit">Save Files</button> <!-- Button to submit the form -->
+    <a href="{% url 'courses:course_detail' course.id %}">Cancel</a>
+    <!-- Link to cancel and go back to course details -->
+</form>
+{% endblock %}

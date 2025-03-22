@@ -1,0 +1,37 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Search Users</h1>
+<!-- Search Form -->
+<form method="get" action="{% url 'courses:search_users' course_id=course.id %}">
+    <input type="text" name="q" placeholder="Search by username or email" value="{{ query }}">
+    <!-- Input for search query -->
+    <button type="submit">Search</button> <!-- Submit button to perform the search -->
+</form>
+
+<!-- Display search results if a query was made -->
+{% if query %}
+<!-- If users are found matching the search query -->
+{% if user_info %}
+<h2>Search Results:</h2>
+<ul>
+    {% for info in user_info %}
+    <li>
+        {{ info.user.username }} - {{ info.user.email }} <!-- Display username and email of each user found -->
+        {% if info.is_enrolled_in_teacher_course %}
+        (Already enrolled in your courses)
+        <!-- Message if the user is already enrolled in courses taught by the teacher -->
+        {% else %}
+        <!-- Link to enroll the user in a course -->
+        <a href="{% url 'courses:enroll_user_in_course' info.user.id %}?course_id={{ course.id }}">Enroll Student</a>
+        {% endif %}
+        <!-- Link to view the user's profile -->
+        <a href="{% url 'accounts:user_profile_with_id' info.user.id %}">View Profile</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No users found.</p> <!-- Message if no users match the search query -->
+{% endif %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>{{ course.title }}</h1>
+<p>{{ course.description }}</p>
+
+{% if is_teacher %}
+<!-- Links for teachers to manage the course -->
+<a href="{% url 'courses:edit_course' course.id %}">Edit Course</a> |
+<a href="{% url 'courses:add_material' course.id %}">+ Add New Files</a> |
+<a href="{% url 'courses:search_users' course.id %}">Search for Users</a>
+{% endif %}
+
+<!-- Section for course materials -->
+<h2>Course Materials</h2>
+<ul>
+    {% for material in materials %}
+    <li>
+        {% if material.file %}
+        <a href="{{ material.file.url }}">{{ material.file.name }}</a> <!-- Link to download/view the material -->
+        {% else %}
+        No file attached. <!-- Message if no file is attached -->
+        {% endif %}
+        {% if is_teacher %}
+        <!-- Button for teachers to delete the material -->
+        <a href="{% url 'courses:delete_material' material.id %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+    </li>
+    {% empty %}
+    <p>No materials have been added to this course yet.</p> <!-- Message when no materials are available -->
+    {% endfor %}
+</ul>
+
+{% if is_teacher %}
+<!-- Section for managing active students -->
+<h2>Active Students</h2>
+<ul>
+    {% for student in active_students %}
+    <li>
+        {{ student.student.username }}
+        <!-- Links to block or remove a student -->
+        <a href="{% url 'courses:block_student' course.id student.student.id %}">Block</a> |
+        <a href="{% url 'courses:remove_student' course.id student.student.id %}">Remove</a>
+    </li>
+    {% empty %}
+    <p>No active students.</p> <!-- Message when no active students are enrolled -->
+    {% endfor %}
+</ul>
+
+<!-- Section for managing blocked students -->
+<h2>Blocked Students</h2>
+<ul>
+    {% for student in blocked_students %}
+    <li>
+        {{ student.student.username }}
+        <!-- Link to unblock a student -->
+        <a href="{% url 'courses:unblock_student' course.id student.student.id %}">Unblock</a>
+    </li>
+    {% empty %}
+    <p>No blocked students.</p> <!-- Message when no students are blocked -->
+    {% endfor %}
+</ul>
+
+<!-- Section for listing unenrolled students -->
+<h3>Unenrolled Students</h3>
+<ul>
+    {% for enrollment in removed_students %}
+    <li>{{ enrollment.student.username }}</li>
+    {% empty %}
+    <p>No unenrolled students.</p> <!-- Message when no students have been unenrolled -->
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

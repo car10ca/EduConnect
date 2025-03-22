@@ -1,0 +1,73 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>
+    {% if course and course.id %}
+    Edit Course: {{ course.title }} <!-- Display heading for editing an existing course -->
+    {% else %}
+    Create New Course <!-- Display heading for creating a new course -->
+    {% endif %}
+</h2>
+
+<!-- Form for creating or editing a course -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %} <!-- CSRF token for security to prevent cross-site request forgery -->
+
+    <!-- Display form errors -->
+    {% if form.errors %}
+    <div class="form-errors">
+        <ul>
+            {% for field in form %}
+            {% if field.errors %}
+            <li>{{ field.label }}: {{ field.errors }}</li> <!-- List individual field errors -->
+            {% endif %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li> <!-- List non-field specific errors -->
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Display formset errors -->
+    {% if formset.errors %}
+    <div class="formset-errors">
+        <ul>
+            {% for form in formset %}
+            {% for field in form %}
+            {% if field.errors %}
+            <li>{{ field.label }}: {{ field.errors }}</li> <!-- List individual formset field errors -->
+            {% endif %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li> <!-- List non-field specific errors in formset -->
+            {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Course Title and Description -->
+    <fieldset>
+        {{ form.as_p }} <!-- Render the course form fields as paragraphs -->
+    </fieldset>
+
+    <!-- Course Materials Section -->
+    <h3>Add or Edit Course Material</h3>
+    <div id="materials-container">
+        {% for material_form in formset %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+            {{ material_form.as_p }} <!-- Render each material form as paragraphs within a bordered box -->
+        </div>
+        {% endfor %}
+        {{ formset.management_form }} <!-- Include management form to handle formset data properly -->
+    </div>
+
+    <!-- Submit and Cancel buttons -->
+    <button type="submit">Save</button> <!-- Button to submit the form -->
+    <a
+        href="{% if course and course.id %}{% url 'courses:course_detail' course.id %}{% else %}{% url 'courses:course_list' %}{% endif %}">Cancel</a>
+    <!-- Cancel button to navigate back -->
+</form>
+
+{% endblock %}

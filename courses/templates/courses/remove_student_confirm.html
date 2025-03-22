@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Remove Student</h1> <!-- Main heading indicating the action of removing a student -->
+
+<!-- Confirmation message -->
+<p>Are you sure you want to remove {{ student.username }} from the course {{ course.title }}?</p>
+
+<!-- Form to confirm removal of the student -->
+<form method="post">
+    {% csrf_token %} <!-- CSRF token for security to prevent cross-site request forgery -->
+    <button type="submit" class="btn btn-danger">Remove Student</button>
+    <!-- Submit button to confirm removal, styled with danger class -->
+    <a href="{% url 'courses:course_detail' course.id %}" class="btn btn-secondary">Cancel</a>
+    <!-- Link to cancel the action and go back to course details, styled with secondary class -->
+</form>
+
+{% endblock %}

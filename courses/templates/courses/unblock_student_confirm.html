@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Unblock Student</h1> <!-- Main heading indicating the action to unblock a student -->
+
+<!-- Confirmation message -->
+<p>Are you sure you want to unblock {{ student.username }} from the course {{ course.title }}?</p>
+
+<!-- Form to confirm unblocking the student -->
+<form method="post">
+    {% csrf_token %} <!-- CSRF token for security to prevent cross-site request forgery -->
+
+    <!-- Submit button to confirm unblocking, styled with success class -->
+    <button type="submit" class="btn btn-success">Unblock Student</button>
+
+    <!-- Link to cancel the action and go back to course details, styled with secondary class -->
+    <a href="{% url 'courses:course_detail' course.id %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% endblock %}
