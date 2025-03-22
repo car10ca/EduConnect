@@ -1,0 +1,44 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Submit Feedback{% endblock %}
+
+{% block content %}
+<h1>Submit Feedback for {{ course.title }}</h1>
+
+<!-- Display error message if it exists -->
+{% if error_message %}
+<p class="error-message">{{ error_message }}</p>
+{% endif %}
+
+<!-- If we are showing a list of courses for a student -->
+{% if course_feedback_status %}
+<h2>Your Enrolled Courses</h2>
+<ul>
+    {% for item in course_feedback_status %}
+    <li>
+        <strong>{{ item.course.title }}</strong> -
+        {% if item.has_given_feedback %}
+        Feedback Submitted
+        {% else %}
+        <a href="{% url 'feedback:submit_feedback' item.course.id %}">Give Feedback</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<!-- Display the feedback form if the student is submitting feedback for a specific course -->
+{% if form %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Feedback</button>
+</form>
+{% endif %}
+{% endif %}
+
+<!-- Only show the 'Back to Course' link when viewing a specific course -->
+{% if course %}
+<a href="{% url 'courses:course_detail' course.id %}">Back to Course</a>
+{% endif %}
+
+{% endblock %}

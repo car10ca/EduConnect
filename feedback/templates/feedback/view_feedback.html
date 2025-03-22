@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %} <!-- Inherit from the base template for consistent styling -->
+
+{% block title %}Submit Feedback{% endblock %} <!-- Dynamic title block for the page -->
+
+{% block content %}
+<h1>Submit Feedback for {{ course.title }}</h1> <!-- Main heading displaying the course title -->
+
+<form method="post">
+    {% csrf_token %} <!-- CSRF token for security to prevent cross-site request forgery -->
+    {{ form.as_p }} <!-- Render the form fields as paragraphs for easy styling and layout -->
+    <button type="submit">Submit Feedback</button> <!-- Submit button for submitting the feedback form -->
+</form>
+
+<!-- Link to go back to the course detail page -->
+<a href="{% url 'courses:course_detail' course.id %}">Back to Course</a>
+{% endblock %}

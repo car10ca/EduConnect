@@ -1,0 +1,46 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}All Feedback{% endblock %}
+
+{% block content %}
+<h1>All Feedback</h1>
+
+{% if page_obj.object_list %}
+<!-- If there are feedbacks, display them in an unordered list -->
+<ul>
+    {% for feedback in page_obj.object_list %}
+    <li>
+        <!-- Display feedback details such as course title, student, rating, comment, and date posted -->
+        <strong>Course:</strong> {{ feedback.course.title }}<br>
+        <strong>Student:</strong> {{ feedback.student.username }}<br>
+        <strong>Rating:</strong> {{ feedback.rating }}<br>
+        <strong>Comment:</strong> {{ feedback.comment|default:"No comment provided" }}<br>
+        <strong>Date:</strong> {{ feedback.date_posted|date:"M. d, Y, P" }}
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- Pagination controls -->
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% else %}
+<!-- Message displayed if there is no feedback available -->
+<p>No feedback available.</p>
+{% endif %}
+{% endblock %}
